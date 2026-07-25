@@ -22,7 +22,7 @@ def register_source(config: LocalSourceConfig):
     try:
         source = SourceFactory.create(
             config.source_type,
-            config.path,
+            config.config.model_dump(),
         )
 
         source.validate()

@@ -5,7 +5,7 @@ All rights reserved.
 
 Local filesystem document source.
 """
-
+from typing import Any
 from pathlib import Path
 
 from app.sources.base import DocumentSource
@@ -16,8 +16,10 @@ class LocalSource(DocumentSource):
     Local filesystem implementation of a document source.
     """
 
-    def __init__(self, path: str):
-        self.path = Path(path)
+    def __init__(self, config: dict[str, Any]):
+        for key, value in config.items():
+            setattr(self, key, value)
+        self.path = Path(self.path)
 
     def validate(self) -> None:
         """

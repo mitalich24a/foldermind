@@ -4,9 +4,13 @@ Copyright (c) 2026 Mitali Choubisa.
 All rights reserved.
 """
 
-from app.models.source import BaseSourceDetails
+from pydantic import BaseModel
 
+from app.models.source import BaseSourceConfig, SourceType
 
-class LocalSourceDetails(BaseSourceDetails):
+class LocalConfig(BaseModel):
     path: str
 
+class LocalSourceConfig(BaseSourceConfig):
+    source_type: SourceType = SourceType.LOCAL
+    config: LocalConfig

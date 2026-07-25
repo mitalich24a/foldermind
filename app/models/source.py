@@ -23,7 +23,7 @@ class SourceType(str, Enum):
     JIRA = "jira"
 
 
-class BaseSourceDetails(BaseModel):
+class BaseSourceConfig(BaseModel):
     """
     Base class for connector-specific configuration.
     """
@@ -31,4 +31,4 @@ class BaseSourceDetails(BaseModel):
 
 class SourceConfig(BaseModel):
     source_type: SourceType
-    config: BaseSourceDetails
+    config: dict[str, str]

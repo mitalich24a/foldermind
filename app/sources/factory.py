@@ -6,6 +6,9 @@ All rights reserved.
 Factory for creating document sources.
 """
 
+from typing import Any, Type
+
+from app.models.source import SourceType
 from app.sources.azure_blob import AzureBlobSource
 from app.sources.base import DocumentSource
 from app.sources.box import BoxSource
@@ -25,25 +28,31 @@ class SourceFactory:
     Creates the appropriate document source.
     """
 
-    _SOURCES = {
-        "local": LocalSource,
-        "s3": S3Source,
-        "azure_blob": AzureBlobSource,
-        "gdrive": GoogleDriveSource,
-        "onedrive": OneDriveSource,
-        "sharepoint": SharePointSource,
-        "github": GitHubSource,
-        "dropbox": DropboxSource,
-        "box": BoxSource,
-        "confluence": ConfluenceSource,
-        "jira": JiraSource,
+    _SOURCES: dict[SourceType, Type[DocumentSource]] = {
+        SourceType.LOCAL: LocalSource,
+        SourceType.S3: S3Source,
+        SourceType.AZURE_BLOB: AzureBlobSource,
+        SourceType.GDRIVE: GoogleDriveSource,
+        SourceType.ONEDRIVE: OneDriveSource,
+        SourceType.SHAREPOINT: SharePointSource,
+        SourceType.GITHUB: GitHubSource,
+        SourceType.DROPBOX: DropboxSource,
+        SourceType.BOX: BoxSource,
+        SourceType.CONFLUENCE: ConfluenceSource,
+        SourceType.JIRA: JiraSource,
     }
 
     @classmethod
-    def create(cls, source_type: str, path: str) -> DocumentSource:
+    def create(
+        cls,
+        source_type: SourceType,
+        config: dict[str, Any],
+    ) -> DocumentSource:
         source_class = cls._SOURCES.get(source_type)
 
         if source_class is None:
-            raise ValueError(f"Unsupported source type: {source_type}")
+            raise ValueError(
+                f"Unsupported source type: {source_type}"
+            )
 
-        return source_class(path)
+        return source_class(config)
