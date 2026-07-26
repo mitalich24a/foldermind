@@ -10,18 +10,11 @@ from abc import ABC, abstractmethod
 
 
 class DocumentSource(ABC):
-    """
-    Contract implemented by every document source.
-    """
 
     @abstractmethod
     def validate(self) -> None:
-        """Validate that the source is accessible."""
+        pass
 
     @abstractmethod
-    def list_documents(self) -> list[str]:
-        """Return all available documents."""
-
-    @abstractmethod
-    def read_document(self, document_path: str) -> str:
-        """Return document contents."""
+    def discover_documents(self):
+        pass

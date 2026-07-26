@@ -5,9 +5,11 @@ All rights reserved.
 
 Local filesystem document source.
 """
-from typing import Any
-from pathlib import Path
 
+from pathlib import Path
+from typing import Any
+
+from app.models.local import LocalDocument
 from app.sources.base import DocumentSource
 
 
@@ -19,6 +21,7 @@ class LocalSource(DocumentSource):
     def __init__(self, config: dict[str, Any]):
         for key, value in config.items():
             setattr(self, key, value)
+
         self.path = Path(self.path)
 
     def validate(self) -> None:
@@ -35,20 +38,31 @@ class LocalSource(DocumentSource):
                 f"Not a directory: {self.path}"
             )
 
-    def list_documents(self) -> list[Path]:
+    def discover_documents(self) -> list[LocalDocument]:
         """
-        Return all files under the configured directory.
+        Discover all documents under the configured directory.
         """
-        return [
-            file
-            for file in self.path.rglob("*")
-            if file.is_file()
-        ]
+        documents = []
 
-    def read_document(self, document_path: Path) -> str:
+        for file in self.path.rglob("*"):
+            if file.is_file():
+                documents.append(
+                    LocalDocument(
+                        name=file.name,
+                        path=file,
+                        size=file.stat().st_size,
+                    )
+                )
+
+        return documents
+
+    def read_document(
+        self,
+        document: LocalDocument,
+    ) -> str:
         """
         Read and return the contents of a document.
         """
-        return document_path.read_text(
+        return document.path.read_text(
             encoding="utf-8"
         )
