@@ -8,13 +8,14 @@ Chunk model.
 
 from pydantic import BaseModel
 
+from app.models.metadata import DocumentMetadata
+
 
 class Chunk(BaseModel):
     """
     Represents a chunk of a document.
     """
 
-    document_name: str
-    document_source: str
     chunk_id: int
     content: str
+    metadata: DocumentMetadata

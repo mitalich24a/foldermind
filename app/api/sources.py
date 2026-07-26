@@ -14,6 +14,12 @@ from app.models.local import LocalSourceConfig
 from app.services.ingestion import IngestionService
 
 from app.readers.factory import ReaderFactory
+from app.services.embedding import EmbeddingService
+
+from app.models.embedding_config import (
+    EmbeddingConfig,
+    EmbeddingProvider,
+)
 
 router = APIRouter(
     prefix="/sources",
@@ -74,9 +80,18 @@ def discover_documents(config: LocalSourceConfig):
 @router.post("/read")
 def read_documents(config: LocalSourceConfig):
     try:
-        service = IngestionService()
+        ingestion_service = IngestionService()
+        embedding_service = EmbeddingService(
+                EmbeddingConfig(
+                    provider=EmbeddingProvider.FAKE,
+                )
+            )
 
-        return list(service.read(config))
+        chunks = ingestion_service.read(config)
+
+        return list(
+            embedding_service.embed(chunks)
+        )
 
     except FileNotFoundError as ex:
         raise HTTPException(

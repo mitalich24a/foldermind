@@ -46,10 +46,9 @@ class RecursiveChunker(DocumentChunker):
             end = start + chunk_size
 
             yield Chunk(
-                document_name=document.name,
-                document_source=document.source,
                 chunk_id=chunk_id,
                 content=text[start:end],
+                metadata=document.metadata,
             )
 
             chunk_id += 1

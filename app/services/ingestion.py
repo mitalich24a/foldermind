@@ -17,6 +17,10 @@ from app.sources.factory import SourceFactory
 
 from app.models.chunking import ChunkingConfig
 
+from pathlib import Path
+
+from app.models.metadata import DocumentMetadata
+
 
 class IngestionService:
     """
@@ -50,9 +54,13 @@ class IngestionService:
             )
 
             document = Document(
-                name=local_document.name,
-                source=str(local_document.path),
-                content=reader.read(local_document),
+                    name=local_document.name,
+                    content=reader.read(local_document),
+                    metadata=DocumentMetadata(
+                        source=str(local_document.path),
+                        extension=Path(local_document.path).suffix,
+                        size=local_document.size,
+                    ),
             )
 
             yield from chunker.chunk(document)
