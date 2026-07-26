@@ -11,6 +11,10 @@ from app.sources.factory import SourceFactory
 
 from app.models.local import LocalSourceConfig
 
+from app.services.ingestion import IngestionService
+
+from app.readers.factory import ReaderFactory
+
 router = APIRouter(
     prefix="/sources",
     tags=["Sources"],
@@ -62,6 +66,31 @@ def discover_documents(config: LocalSourceConfig):
         )
 
     except NotADirectoryError as ex:
+        raise HTTPException(
+            status_code=400,
+            detail=str(ex),
+        )
+
+@router.post("/read")
+def read_documents(config: LocalSourceConfig):
+    try:
+        service = IngestionService()
+
+        return list(service.read(config))
+
+    except FileNotFoundError as ex:
+        raise HTTPException(
+            status_code=404,
+            detail=str(ex),
+        )
+
+    except NotADirectoryError as ex:
+        raise HTTPException(
+            status_code=400,
+            detail=str(ex),
+        )
+
+    except ValueError as ex:
         raise HTTPException(
             status_code=400,
             detail=str(ex),

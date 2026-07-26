@@ -12,6 +12,8 @@ from typing import Any
 from app.models.local import LocalDocument
 from app.sources.base import DocumentSource
 
+from collections.abc import Iterator
+
 
 class LocalSource(DocumentSource):
     """
@@ -38,23 +40,17 @@ class LocalSource(DocumentSource):
                 f"Not a directory: {self.path}"
             )
 
-    def discover_documents(self) -> list[LocalDocument]:
+    def discover_documents(self,) -> Iterator[LocalDocument]:
         """
         Discover all documents under the configured directory.
         """
-        documents = []
-
         for file in self.path.rglob("*"):
             if file.is_file():
-                documents.append(
-                    LocalDocument(
-                        name=file.name,
-                        path=file,
-                        size=file.stat().st_size,
-                    )
+                yield LocalDocument(
+                    name=file.name,
+                    path=file,
+                    size=file.stat().st_size,
                 )
-
-        return documents
 
     def read_document(
         self,
