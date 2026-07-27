@@ -22,22 +22,27 @@ FolderMind is an AI-powered knowledge platform that transforms a local folder of
 ## Architecture
 
 ```text
-Local Folder
-      │
-      ▼
-File Scanner
-      ▼
-Document Ingestion
-      ▼
-Chunking
-      ▼
-Embeddings
-      ▼
-Vector Database
-      ▼
-Semantic Search
-      ▼
-RAG + LLM
+Ingestion
+    ↓
+Embedding
+    ↓
+Vector Store
+
+User Query
+    ↓
+QueryEmbeddingService
+    ↓
+Retriever
+    ↓
+SearchResults
+    ↓
+PromptBuilder
+    ↓
+Prompt
+    ↓
+LLM
+    ↓
+Answer
       ▼
 FastAPI APIs / MCP Server
 ```
