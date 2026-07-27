@@ -21,6 +21,14 @@ from app.models.embedding_config import (
     EmbeddingProvider,
 )
 
+from app.models.vectorstore_config import (
+    VectorStoreConfig,
+    VectorStoreProvider,
+)
+from app.services.vectorstore import (
+    VectorStoreService,
+)
+
 router = APIRouter(
     prefix="/sources",
     tags=["Sources"],
@@ -86,12 +94,16 @@ def read_documents(config: LocalSourceConfig):
                     provider=EmbeddingProvider.FAKE,
                 )
             )
-
+        vectorstore_service = VectorStoreService(
+                VectorStoreConfig(
+                    provider=VectorStoreProvider.MEMORY,
+                )
+            )
         chunks = ingestion_service.read(config)
+        embeddings = embedding_service.embed(chunks)
+        vectorstore_service.upsert(embeddings)
 
-        return list(
-            embedding_service.embed(chunks)
-        )
+        return list(embeddings)
 
     except FileNotFoundError as ex:
         raise HTTPException(
