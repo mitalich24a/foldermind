@@ -12,6 +12,8 @@ from app.api.sources import router as sources_router
 
 from app.api.chat import router as chat_router
 
+from app.api.folder import router as folder_router
+
 app = FastAPI(
     title="FolderMind",
     description="AI-powered knowledge platform.",
@@ -20,6 +22,7 @@ app = FastAPI(
 
 app.include_router(sources_router)
 app.include_router(chat_router)
+app.include_router(folder_router)
 
 @app.get("/")
 def health_check():
