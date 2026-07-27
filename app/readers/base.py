@@ -8,6 +8,8 @@ Base class for all document readers.
 
 from abc import ABC, abstractmethod
 
+from app.models.document import Document
+
 
 class DocumentReader(ABC):
     """
@@ -15,8 +17,8 @@ class DocumentReader(ABC):
     """
 
     @abstractmethod
-    def read(self, document) -> str:
+    def read(self, document: Document) -> str:
         """
         Read and return the document contents.
         """
-        pass
+        raise NotImplementedError

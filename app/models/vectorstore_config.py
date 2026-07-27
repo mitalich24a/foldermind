@@ -10,6 +10,8 @@ from enum import Enum
 
 from pydantic import BaseModel
 
+from app.config.settings import settings
+
 
 class VectorStoreProvider(str, Enum):
     """
@@ -27,5 +29,7 @@ class VectorStoreConfig(BaseModel):
     """
 
     provider: VectorStoreProvider = (
-        VectorStoreProvider.MEMORY
+        VectorStoreProvider(
+            settings.vector_store_provider,
+        )
     )

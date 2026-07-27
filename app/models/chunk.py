@@ -16,6 +16,6 @@ class Chunk(BaseModel):
     Represents a chunk of a document.
     """
 
-    chunk_id: int
+    chunk_id: str
     content: str
     metadata: DocumentMetadata

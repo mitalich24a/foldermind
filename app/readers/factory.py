@@ -14,6 +14,7 @@ from app.readers.docx import DOCXReader
 from app.readers.markdown import MarkdownReader
 from app.readers.pdf import PDFReader
 from app.readers.txt import TXTReader
+from app.readers.docx import DOCXReader
 
 
 class ReaderFactory:

@@ -39,18 +39,18 @@ class RecursiveChunker(DocumentChunker):
             )
 
         start = 0
-        chunk_id = 0
+        chunk_index = 0
 
         while start < len(text):
 
             end = start + chunk_size
 
             yield Chunk(
-                chunk_id=chunk_id,
+                chunk_id=f"{document.metadata.source}:{chunk_index}",
                 content=text[start:end],
                 metadata=document.metadata,
             )
 
-            chunk_id += 1
+            chunk_index += 1
 
             start += chunk_size - overlap

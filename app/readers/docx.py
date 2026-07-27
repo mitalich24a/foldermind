@@ -3,16 +3,33 @@ FolderMind
 Copyright (c) 2026 Mitali Choubisa.
 All rights reserved.
 
-Reader for DOCX documents.
+Reader for Microsoft Word documents.
 """
 
+from pathlib import Path
+
+from docx import Document as DocxDocument
+
+from app.models.document import Document
 from app.readers.base import DocumentReader
 
 
 class DOCXReader(DocumentReader):
     """
-    Reader for Microsoft Word documents.
+    Reader for DOCX files.
     """
 
-    def read(self, document) -> str:
-        raise NotImplementedError("DOCX reader not implemented yet.")
+    def read(self, document: Document) -> str:
+        path = Path(document.path)
+
+        doc = DocxDocument(path)
+
+        paragraphs = []
+
+        for paragraph in doc.paragraphs:
+            text = paragraph.text.strip()
+
+            if text:
+                paragraphs.append(text)
+
+        return "\n".join(paragraphs)

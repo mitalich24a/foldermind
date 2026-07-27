@@ -15,7 +15,10 @@ from app.vectorstores.chroma import ChromaVectorStore
 from app.vectorstores.memory import MemoryVectorStore
 from app.vectorstores.qdrant import QdrantVectorStore
 
+
 _memory_store = MemoryVectorStore()
+_chroma_store = ChromaVectorStore()
+_qdrant_store = QdrantVectorStore()
 
 class VectorStoreFactory:
     """
@@ -32,10 +35,10 @@ class VectorStoreFactory:
             return _memory_store
 
         if config.provider == VectorStoreProvider.CHROMA:
-            return ChromaVectorStore()
+            return _chroma_store
 
         if config.provider == VectorStoreProvider.QDRANT:
-            return QdrantVectorStore()
+            return _qdrant_store
 
         raise ValueError(
             f"Unsupported vector store: {config.provider}"

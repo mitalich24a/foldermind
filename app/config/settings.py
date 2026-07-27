@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     embedding_provider: str = "fake"
     embedding_model: str = "text-embedding-3-small"
 
+    vector_store_provider: str = "chroma"
+
     llm_provider: str = "fake"
     llm_model: str = "gpt-4.1-mini"
 
