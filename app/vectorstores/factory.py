@@ -15,6 +15,7 @@ from app.vectorstores.chroma import ChromaVectorStore
 from app.vectorstores.memory import MemoryVectorStore
 from app.vectorstores.qdrant import QdrantVectorStore
 
+_memory_store = MemoryVectorStore()
 
 class VectorStoreFactory:
     """
@@ -28,7 +29,7 @@ class VectorStoreFactory:
     ) -> VectorStore:
 
         if config.provider == VectorStoreProvider.MEMORY:
-            return MemoryVectorStore()
+            return _memory_store
 
         if config.provider == VectorStoreProvider.CHROMA:
             return ChromaVectorStore()

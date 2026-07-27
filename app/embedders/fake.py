@@ -12,6 +12,9 @@ from app.embedders.base import Embedder
 from app.models.chunk import Chunk
 from app.models.embedding import Embedding
 
+from app.models.query import Query
+from app.models.query_embedding import QueryEmbedding
+
 
 class FakeEmbedder(Embedder):
     """
@@ -30,3 +33,13 @@ class FakeEmbedder(Embedder):
                 chunk=chunk,
                 vector=[0.0] * self.EMBEDDING_DIMENSION,
             )
+    
+    def embed_query(
+    self,
+    query: Query,
+) -> QueryEmbedding:
+
+        return QueryEmbedding(
+            query=query,
+            vector=[0.0] * self.EMBEDDING_DIMENSION,
+        )
