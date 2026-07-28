@@ -15,6 +15,7 @@ from app.models.embedding import Embedding
 from app.models.metadata import DocumentMetadata
 from app.models.search_result import SearchResult
 from app.vectorstores.base import VectorStore
+from app.config import settings
 
 
 class ChromaVectorStore(VectorStore):
@@ -24,7 +25,7 @@ class ChromaVectorStore(VectorStore):
 
     def __init__(self) -> None:
         self.client = chromadb.PersistentClient(
-            path="data/chroma",
+            path=str(settings.chroma_db_path),
         )
 
         self.collection = self.client.get_or_create_collection(

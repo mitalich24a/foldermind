@@ -3,29 +3,42 @@ FolderMind
 Copyright (c) 2026 Mitali Choubisa.
 All rights reserved.
 
-Application settings.
+Application configuration.
 """
 
-from pydantic_settings import BaseSettings
+from pathlib import Path
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """
-    Application settings loaded from environment variables.
+    Application settings.
     """
 
+    # API Keys
     openai_api_key: str = ""
 
-    embedding_provider: str = "fake"
-    embedding_model: str = "text-embedding-3-small"
-
+    # Providers
+    embedding_provider: str = "openai"
     vector_store_provider: str = "chroma"
+    llm_provider: str = "openai"
 
-    llm_provider: str = "fake"
-    llm_model: str = "gpt-4.1-mini"
+    # Models
+    embedding_model: str = "text-embedding-3-small"
+    llm_model: str = "gpt-5-mini"
 
-    class Config:
-        env_file = ".env"
+    # Storage
+    chroma_db_path: Path = Path("data/chroma")
+
+    # Chunking
+    chunk_size: int = 1000
+    chunk_overlap: int = 200
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+    )
 
 
 settings = Settings()
