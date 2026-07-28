@@ -6,6 +6,9 @@ All rights reserved.
 Reader for Markdown documents.
 """
 
+from pathlib import Path
+
+from app.models.document import Document
 from app.readers.base import DocumentReader
 
 
@@ -14,5 +17,9 @@ class MarkdownReader(DocumentReader):
     Reader for Markdown files.
     """
 
-    def read(self, document) -> str:
-        raise NotImplementedError("Markdown reader not implemented yet.")
+    def read(self, document: Document) -> str:
+        path = Path(document.path)
+
+        return path.read_text(
+            encoding="utf-8"
+        )

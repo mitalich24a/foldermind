@@ -15,6 +15,13 @@ from app.readers.markdown import MarkdownReader
 from app.readers.pdf import PDFReader
 from app.readers.txt import TXTReader
 from app.readers.docx import DOCXReader
+from app.readers.markdown import MarkdownReader
+from app.readers.csv import CSVReader
+from app.readers.json import JSONReader
+from app.readers.xml import XMLReader
+from app.readers.html import HTMLReader
+from app.readers.xlsx import XLSXReader
+from app.readers.pptx import PPTXReader
 
 
 class ReaderFactory:
@@ -27,6 +34,14 @@ class ReaderFactory:
         ".md": MarkdownReader,
         ".pdf": PDFReader,
         ".docx": DOCXReader,
+        ".md": MarkdownReader,
+        ".csv": CSVReader,
+        ".json": JSONReader,
+        ".xml": XMLReader,
+        ".html": HTMLReader,
+        ".htm": HTMLReader,
+        ".xlsx": XLSXReader,
+        ".pptx": PPTXReader,
     }
 
     @classmethod
