@@ -1,0 +1,16 @@
+privacy-first RAG application that enables users to chat with local documents without uploading them to the cloud.
+
+The application has two main pipelines: indexing and querying.
+
+During indexing, the user selects a folder containing documents such as PDFs, DOCX files, or text files. 
+FolderMind extracts the text, splits it into overlapping chunks, and generates embeddings for each chunk 
+using Ollama's nomic-embed-text model. 
+Each chunk, along with its embedding and metadata, is stored in ChromaDB.
+
+During querying, the user's question is also converted into an embedding using the same embedding model. 
+ChromaDB performs semantic similarity search to retrieve the most relevant chunks. 
+Those chunks are combined with the user's question to build a RAG prompt, 
+which is sent to the LLM (llama3.2 running on Ollama) to generate the final answer.
+
+We chose a RAG architecture because LLMs don't have access to a user's private documents. 
+RAG augments the LLM with relevant external context, resulting in accurate, grounded answers while keeping all data local.
