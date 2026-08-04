@@ -44,7 +44,7 @@ LLM
     ↓
 Answer
       ▼
-FastAPI APIs / MCP Server
+FastAPI APIs
 ```
 
 ## Tech Stack
@@ -52,17 +52,8 @@ FastAPI APIs / MCP Server
 * **Backend:** Python, FastAPI
 * **AI:** RAG, Embedding Models
 * **Search:** ChromaDB (Vector Database)
-* **Data:** PyArrow
-* **Storage:** PostgreSQL
-* **Agent Integration:** MCP
-* **Infrastructure:** Docker
+* **Storage:** ChromaDB
 
-## Future Enhancements
 
-* Apache Iceberg
-* Apache Airflow
-* Kafka / RabbitMQ
-* OpenTelemetry
-* Kubernetes
 
 
