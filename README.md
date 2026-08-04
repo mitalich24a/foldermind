@@ -2,7 +2,7 @@
 
 Copyright © 2026 Mitali Choubisa.
 
-All rights reserved. This repository is shared for portfolio and interview purposes only.
+All rights reserved. This repository is shared for portfolio purposes only.
 
 # FolderMind
 
